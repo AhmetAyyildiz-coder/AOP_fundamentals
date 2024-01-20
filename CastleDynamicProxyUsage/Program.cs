@@ -10,4 +10,16 @@
  *
  * Bu projede en yalın hali ile bir aspect yapacağız.
  *
+ *
+ * Runtime'da bir proxy oluşturmak ? 
  */
+
+using Castle.DynamicProxy;
+using CastleDynamicProxyUsage;
+
+
+// söz konusu sınıf için bir araya girici - aspect - sınıfı eklemiş oluyoruz. En temel anlamda.
+var proxy = new ProxyGenerator();
+var aspect = proxy.CreateClassProxy<MyClass>(new MyInterceptorAspect());
+
+aspect.MyMethod();
