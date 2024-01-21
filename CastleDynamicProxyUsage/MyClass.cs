@@ -5,7 +5,12 @@ using Core.Interceptors;
 namespace CastleDynamicProxyUsage;
 
 
-public class MyClass
+public interface IMyClass
+{
+    void MyMethod();
+}
+
+public class MyClass : IMyClass
 {
     // Böyle tanım olursa interception - dynamic proxy kullanarak araya giremez. 
     //public void MyMethod()
@@ -16,6 +21,8 @@ public class MyClass
 
     // araya girme - aspect - için mutlaka virtual olmalıdır. 
 
+    // her seferinde proxy generator oluşturmak yerine bu şekilde kullanabiliriz.
+    [MyInterceptorAspect]
     public virtual void MyMethod()
     {
         Console.WriteLine("My method body");
