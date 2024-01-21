@@ -1,11 +1,21 @@
-﻿namespace Entities
+﻿using Core.Aspect;
+namespace Entities
 {
-    public class Employee
+
+    public interface IEmployee
+    {
+        void Add(int id, string firstname, string lastname);
+        void Update(int id, string firstname, string lastname);
+    }
+    public class Employee : IEmployee
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
+
+        [DefensiveProgrammingAspect]
+        [InterceptionAspect]
         public virtual void Add(int id, string firstname, string lastname)
         {
             Console.WriteLine("Method Started");

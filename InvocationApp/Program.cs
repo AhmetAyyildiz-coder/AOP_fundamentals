@@ -1,19 +1,33 @@
-﻿
-
-using Castle.DynamicProxy;
+﻿using Autofac;
 using Entities;
-using InvocationApp.Aspects;
+using InvocationApp;
 
-var proxy = new ProxyGenerator();
+// autofac ioc container register 
+var builder = new ContainerBuilder();
+builder.RegisterModule(new BaseModule());
 
-// bu şekilde birden fazla aspect ekleyebiliriz. 
-var aspect = proxy.CreateClassProxy<Employee>(new InterceptionAspect(),new DefensiveProgrammingAspect());
 
-aspect.Add(1,"ahmet","ayyildiz");
+
+// autofac ioc build
+var container = builder.Build();
+
+
+// autofac solve 
+// IEmploye ifadesini çöz. İçerisinde aspect varsa kullan diyoruz aslında. 
+/*
+ * [DefensiveProgrammingAspect]
+   [InterceptionAspect]  
+bu 2 aspect de kullanılacak bu durumda.
+ */
+var willBeIntercepted = container.Resolve<IEmployee>();
+
 
 
 var Emp1 = new Employee();
 Emp1.Id = 1;
 Emp1.FirstName = "ahmet";
+Emp1.LastName = "ayyildiz";
 
-aspect.Update(1,"",null);
+
+Emp1.Update(Emp1.Id,Emp1.FirstName,Emp1.LastName);
+willBeIntercepted.Add(Emp1.Id, Emp1.FirstName, Emp1.LastName);
