@@ -14,14 +14,10 @@
 
         }
 
-
+        // amacımız buradaki metot'a gelen parametreleri tek tek kontrol etmek yerine aspect ile yapmak.
         public virtual void Update(int id, string firstname, string lastname)
         {
-            if (id==null)
-            {
-                throw new ArgumentNullException();
-            }
-
+           
             Console.WriteLine("Updated");
         }
     }
